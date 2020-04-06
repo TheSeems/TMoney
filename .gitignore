@@ -1,0 +1,4 @@
+# Project exclude paths
+/tmoney-api/target/
+/tmoney-common/target/
+/tmoney-spigot/target/

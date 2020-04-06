@@ -1,0 +1,8 @@
+name: TMoney
+softdepend:
+  - Vault
+main: me.theseems.tmoney.Main
+version: 0.1D
+api-version: 1.13
+commands:
+  tmoney:
