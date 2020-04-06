@@ -1,7 +1,7 @@
 # TMoney
+![Kind of logo](https://theseems.ru/tmoney/logo.png)  
 
-[![Codacy Badge](https://api.codacy.com/project/badge/Grade/696b14ae195643c79e6e2c0d6375133d)](https://app.codacy.com/manual/TheSeems/TMoney?utm_source=github.com&utm_medium=referral&utm_content=TheSeems/TMoney&utm_campaign=Badge_Grade_Dashboard)
-
+[![Codacy Badge](https://api.codacy.com/project/badge/Grade/696b14ae195643c79e6e2c0d6375133d)](https://app.codacy.com/manual/TheSeems/TMoney?utm_source=github.com&utm_medium=referral&utm_content=TheSeems/TMoney&utm_campaign=Badge_Grade_Dashboard)  
 A minecraft plugin providing support for multiple economies on your server
 
 ## Commands
