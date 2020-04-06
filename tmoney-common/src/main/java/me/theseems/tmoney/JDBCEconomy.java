@@ -115,11 +115,11 @@ public class JDBCEconomy implements Economy {
     }
   }
 
-  boolean exists(UUID player) {
+  private boolean exists(UUID player) {
     try (Connection connection = getConnection()) {
       Statement statement = connection.createStatement();
       ResultSet resultSet =
-          statement.executeQuery("SELECT Money FROM " + prefix + " WHERE Player='" + player + "'");
+              statement.executeQuery("SELECT Money FROM " + prefix + " WHERE Player='" + player + "'");
       return resultSet.next();
     } catch (SQLException e) {
       System.err.println("[" + getName() + "] ERROR getting balance for player '" + player + "'");

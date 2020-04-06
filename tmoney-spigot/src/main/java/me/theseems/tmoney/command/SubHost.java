@@ -9,7 +9,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 public abstract class SubHost {
-  Map<String, SubCommand> subs;
+  protected Map<String, SubCommand> subs;
 
   public SubHost() {
     subs = new HashMap<>();

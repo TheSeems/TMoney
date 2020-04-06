@@ -3,7 +3,9 @@ package me.theseems.tmoney.config;
 import me.theseems.tmoney.Economy;
 
 public abstract class EconomyConfig {
-    private String type, name;
+    private String type;
+    private String name;
+
     public abstract Economy getEconomy();
 
     public String getType() {

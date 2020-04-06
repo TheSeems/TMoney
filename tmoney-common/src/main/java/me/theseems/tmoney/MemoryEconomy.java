@@ -4,7 +4,6 @@ import java.math.BigDecimal;
 import java.util.Map;
 import java.util.UUID;
 import java.util.concurrent.ConcurrentHashMap;
-import java.util.function.BiFunction;
 
 public class MemoryEconomy implements Economy {
     private Map<UUID, BigDecimal> money;
