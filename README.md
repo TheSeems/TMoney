@@ -10,7 +10,7 @@ _[] - required argument_
 _If economy is not specified plugin will use default one (usually Vault)_  
 
 ### Balance
-/tmoney (economy) [player] - Get balance of player in certain economy
+/tmoney balance (economy) [player] - Get balance of player in certain economy
 ### Deposit
 /tmoney deposit (economy) [player] [amount] - Deposit money on player's balance in certain economy 
 ### Withdraw
