@@ -12,9 +12,9 @@ _If economy is not specified plugin will use default one (usually Vault)_
 ### Balance
 /tmoney balance (economy) [player] - Get balance of player in certain economy
 ### Deposit
-/tmoney deposit (economy) [player] [amount] - Deposit money on player's balance in certain economy 
+/tmoney deposit (economy) [player] [amount] - Deposit money on a player's balance in certain economy 
 ### Withdraw
-/tmoney withdraw (economy) [player] [amount] - Withdraw money from player's balance in certain economy 
+/tmoney withdraw (economy) [player] [amount] - Withdraw money from a player's balance in certain economy 
 ### Reload
 /tmoney reload - Reloads the config
 ### List

@@ -7,7 +7,7 @@ public interface SubCommand {
    * Pass the sub command
    *
    * @param sender of sub command
-   * @param args   of sub command
+   * @param args of sub command
    */
   void pass(CommandSender sender, String[] args);
 

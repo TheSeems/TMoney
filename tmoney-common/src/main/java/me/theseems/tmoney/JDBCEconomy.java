@@ -68,13 +68,13 @@ public class JDBCEconomy implements Economy {
       initPlayer(player);
       Statement statement = connection.createStatement();
       statement.execute(
-              "UPDATE "
-                      + prefix
-                      + " SET Money="
-                      + getBalance(player).add(amount).setScale(40, RoundingMode.HALF_DOWN)
-                      + " WHERE Player='"
-                      + player
-                      + "'");
+          "UPDATE "
+              + prefix
+              + " SET Money="
+              + getBalance(player).add(amount).setScale(40, RoundingMode.HALF_DOWN)
+              + " WHERE Player='"
+              + player
+              + "'");
     } catch (SQLException e) {
       System.err.println(
           "["
@@ -95,13 +95,13 @@ public class JDBCEconomy implements Economy {
       initPlayer(player);
       Statement statement = connection.createStatement();
       statement.execute(
-              "UPDATE "
-                      + prefix
-                      + " SET Money="
-                      + getBalance(player).subtract(amount).setScale(40, RoundingMode.HALF_DOWN)
-                      + " WHERE Player='"
-                      + player
-                      + "'");
+          "UPDATE "
+              + prefix
+              + " SET Money="
+              + getBalance(player).subtract(amount).setScale(40, RoundingMode.HALF_DOWN)
+              + " WHERE Player='"
+              + player
+              + "'");
     } catch (SQLException e) {
       System.err.println(
           "["
@@ -120,7 +120,7 @@ public class JDBCEconomy implements Economy {
     try (Connection connection = getConnection()) {
       Statement statement = connection.createStatement();
       ResultSet resultSet =
-              statement.executeQuery("SELECT Money FROM " + prefix + " WHERE Player='" + player + "'");
+          statement.executeQuery("SELECT Money FROM " + prefix + " WHERE Player='" + player + "'");
       return resultSet.next();
     } catch (SQLException e) {
       System.err.println("[" + getName() + "] ERROR getting balance for player '" + player + "'");

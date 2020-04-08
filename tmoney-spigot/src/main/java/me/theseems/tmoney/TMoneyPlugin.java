@@ -46,19 +46,19 @@ public class TMoneyPlugin extends JavaPlugin {
 
     try {
       moneyConfig =
-              TMoneyConfig.getBuilder().create().fromJson(new FileReader(file), TMoneyConfig.class);
+          TMoneyConfig.getBuilder().create().fromJson(new FileReader(file), TMoneyConfig.class);
       if (moneyConfig == null) throw new NullPointerException("Config is empty");
     } catch (Exception e) {
       plugin
-              .getLogger()
-              .warning(
-                      "Cannot load a valid config with economies ("
-                              + e.getMessage()
-                              + "). Using sample one");
+          .getLogger()
+          .warning(
+              "Cannot load a valid config with economies ("
+                  + e.getMessage()
+                  + "). Using sample one");
       try {
         moneyConfig =
-                ConfigGenerator.createAndWriteSampleConfig(
-                        new File(plugin.getDataFolder(), "data.json"));
+            ConfigGenerator.createAndWriteSampleConfig(
+                new File(plugin.getDataFolder(), "data.json"));
       } catch (IOException ex) {
         plugin.getLogger().warning("Error writing sample config: " + ex.getMessage());
         plugin.getServer().getPluginManager().disablePlugin(plugin);

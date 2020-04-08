@@ -11,13 +11,13 @@ public class SerializationTest {
 
   @Test
   public void test() {
-      TMoneyConfig config = ConfigGenerator.createSampleConfig();
-      String string = new GsonBuilder().create().toJson(config);
+    TMoneyConfig config = ConfigGenerator.createSampleConfig();
+    String string = new GsonBuilder().create().toJson(config);
 
-      TMoneyConfig tMoneyConfig =
-              TMoneyConfig.getBuilder().create().fromJson(string, TMoneyConfig.class);
-      String other = new GsonBuilder().create().toJson(tMoneyConfig);
+    TMoneyConfig tMoneyConfig =
+        TMoneyConfig.getBuilder().create().fromJson(string, TMoneyConfig.class);
+    String other = new GsonBuilder().create().toJson(tMoneyConfig);
 
-      assertEquals(other, string);
+    assertEquals(other, string);
   }
 }

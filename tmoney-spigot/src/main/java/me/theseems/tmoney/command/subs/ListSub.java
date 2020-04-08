@@ -16,7 +16,7 @@ public class ListSub implements SubCommand {
     }
 
     sender.sendMessage(
-            "§7Economies (" + TMoneyAPI.getEconomies().size() + ") §2" + builder.toString());
+        "§7Economies (" + TMoneyAPI.getEconomies().size() + ") §2" + builder.toString());
   }
 
   @Override

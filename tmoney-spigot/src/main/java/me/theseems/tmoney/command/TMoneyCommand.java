@@ -18,8 +18,8 @@ public class TMoneyCommand extends SubHost implements CommandExecutor {
   @Override
   public void onNotFound(CommandSender sender) {
     sender.sendMessage(
-            "§2§lTMoney §fby TheSeems<me@theseems.ru> §7v"
-                    + TMoneyPlugin.getPlugin().getDescription().getVersion());
+        "§2§lTMoney §fby TheSeems<me@theseems.ru> §7v"
+            + TMoneyPlugin.getPlugin().getDescription().getVersion());
   }
 
   @Override
@@ -33,10 +33,11 @@ public class TMoneyCommand extends SubHost implements CommandExecutor {
     if (strings.length > 0 && strings[0].equals("help")) {
       onNotFound(commandSender);
       subs.forEach(
-              (s1, subCommand) -> {
-                if (subCommand.getDescription() != null && commandSender.hasPermission(subCommand.getPermission()))
-                  commandSender.sendMessage(subCommand.getDescription());
-              });
+          (s1, subCommand) -> {
+            if (subCommand.getDescription() != null
+                && commandSender.hasPermission(subCommand.getPermission()))
+              commandSender.sendMessage(subCommand.getDescription());
+          });
       return true;
     }
 

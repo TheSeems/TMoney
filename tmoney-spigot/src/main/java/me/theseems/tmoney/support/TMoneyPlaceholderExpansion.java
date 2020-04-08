@@ -26,14 +26,14 @@ public class TMoneyPlaceholderExpansion extends PlaceholderExpansion {
   public String onPlaceholderRequest(Player p, String params) {
     final String[] balance = {"0"};
     TMoneyAPI.getManager()
-            .getEconomy(params)
-            .ifPresent(
-                    economy ->
-                            balance[0] =
-                                    economy
-                                            .getBalance(p.getUniqueId())
-                                            .setScale(0, RoundingMode.HALF_DOWN)
-                                            .toString());
+        .getEconomy(params)
+        .ifPresent(
+            economy ->
+                balance[0] =
+                    economy
+                        .getBalance(p.getUniqueId())
+                        .setScale(0, RoundingMode.HALF_DOWN)
+                        .toString());
 
     return balance[0];
   }

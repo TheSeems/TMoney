@@ -33,7 +33,8 @@ public class TMoneyConfig {
   }
 
   public static GsonBuilder getBuilder() {
-    return new GsonBuilder().registerTypeAdapter(EconomyConfig.class, new EconomyConfigDeserializer());
+    return new GsonBuilder()
+        .registerTypeAdapter(EconomyConfig.class, new EconomyConfigDeserializer());
   }
 
   public String getLibsUrl() {

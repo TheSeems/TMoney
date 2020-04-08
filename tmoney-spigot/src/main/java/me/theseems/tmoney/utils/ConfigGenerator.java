@@ -18,15 +18,15 @@ public class ConfigGenerator {
     String path = "<path-to-db>";
     try {
       File file =
+          new File(
               new File(
-                      new File(
-                              TMoneyPlugin.class
-                                      .getProtectionDomain()
-                                      .getCodeSource()
-                                      .getLocation()
-                                      .toURI())
-                              .getParentFile(),
-                      "/TMoney/Economy.db");
+                      TMoneyPlugin.class
+                          .getProtectionDomain()
+                          .getCodeSource()
+                          .getLocation()
+                          .toURI())
+                  .getParentFile(),
+              "/TMoney/Economy.db");
 
       if (!file.exists()) {
         file.createNewFile();
@@ -46,9 +46,9 @@ public class ConfigGenerator {
     JDBCConfig sample = new JDBCConfig("jdbc:h2:file:" + path, "minecraft", "password", "mc");
     JDBCEconomyConfig economyConfig = new JDBCEconomyConfig(sample, "donate");
     return new TMoneyConfig(
-            Collections.singletonList(economyConfig),
-            "https://theseems.ru/tmoney/libs",
-            Arrays.asList("org.h2.Driver", "org.postgresql.Driver"));
+        Collections.singletonList(economyConfig),
+        "https://theseems.ru/tmoney/libs",
+        Arrays.asList("org.h2.Driver", "org.postgresql.Driver"));
   }
 
   public static void writeConfig(TMoneyConfig config, File file) throws IOException {

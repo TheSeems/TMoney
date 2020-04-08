@@ -78,6 +78,6 @@ public class WithdrawBalanceSub implements SubCommand {
 
   @Override
   public String getDescription() {
-    return "§7/tmoney withdraw (economy) [player] [amount] §8- §2Withdraw money from player's balance in certain economy";
+    return "§7/tmoney withdraw (economy) [player] [amount] §8- §2Withdraw money from a player's balance in certain economy";
   }
 }

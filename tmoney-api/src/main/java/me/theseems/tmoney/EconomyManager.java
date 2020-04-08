@@ -14,12 +14,14 @@ public interface EconomyManager {
 
   /**
    * Add economy to manager
+   *
    * @param economy to add
    */
   void addEconomy(Economy economy);
 
   /**
    * Remove economy from manager
+   *
    * @param name to remove
    */
   void removeEconomy(String name);

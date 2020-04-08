@@ -56,7 +56,7 @@ public class DepositBalanceSub implements SubCommand {
     Player actual = Bukkit.getPlayer(playerName);
     if (actual == null) {
       sender.sendMessage(
-              "§7Player §2'" + playerName + "'§7 is offline. §oTrying to use argument as UUID");
+          "§7Player §2'" + playerName + "'§7 is offline. §oTrying to use argument as UUID");
       try {
         player = UUID.fromString(playerName);
       } catch (Exception e) {
@@ -68,7 +68,13 @@ public class DepositBalanceSub implements SubCommand {
 
     optional.get().deposit(player, amount);
     sender.sendMessage(
-            "§7Balance of player §2'" + playerName + "'§7 now is " + optional.get().getBalance(player).setScale(1, RoundingMode.HALF_DOWN) + " (+" + amount + ")");
+        "§7Balance of player §2'"
+            + playerName
+            + "'§7 now is "
+            + optional.get().getBalance(player).setScale(1, RoundingMode.HALF_DOWN)
+            + " (+"
+            + amount
+            + ")");
   }
 
   @Override
@@ -78,6 +84,6 @@ public class DepositBalanceSub implements SubCommand {
 
   @Override
   public String getDescription() {
-    return "§7/tmoney deposit (economy) [player] [amount] §8- §2Deposit money on player's balance in certain economy";
+    return "§7/tmoney deposit (economy) [player] [amount] §8- §2Deposit money on a player's balance in certain economy";
   }
 }

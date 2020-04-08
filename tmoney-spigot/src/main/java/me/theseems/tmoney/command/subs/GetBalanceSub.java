@@ -41,7 +41,7 @@ public class GetBalanceSub implements SubCommand {
     Player actual = Bukkit.getPlayer(playerName);
     if (actual == null) {
       sender.sendMessage(
-              "§7Player §2'" + playerName + "'§7 is offline. §oTrying to use argument as UUID");
+          "§7Player §2'" + playerName + "'§7 is offline. §oTrying to use argument as UUID");
       try {
         player = UUID.fromString(playerName);
       } catch (Exception e) {
@@ -53,11 +53,11 @@ public class GetBalanceSub implements SubCommand {
 
     BigDecimal amount = optional.get().getBalance(player);
     sender.sendMessage(
-            "§7Balance of player §2'"
-                    + playerName
-                    + "'§7 is §2'"
-                    + amount.setScale(3, RoundingMode.HALF_DOWN)
-                    + "'");
+        "§7Balance of player §2'"
+            + playerName
+            + "'§7 is §2'"
+            + amount.setScale(3, RoundingMode.HALF_DOWN)
+            + "'");
   }
 
   @Override

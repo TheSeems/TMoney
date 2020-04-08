@@ -28,7 +28,7 @@ public abstract class SubHost {
         .spigot()
         .sendMessage(
             new TextComponent(
-                "§7Sorry.. we have a problem executing this command: §c" + e.getMessage()));
+                "§7Sorry.. we have encountered a problem executing this command: §c" + e.getMessage()));
     sender.spigot().sendMessage(new TextComponent("§7Try again later..."));
     e.printStackTrace();
   }
