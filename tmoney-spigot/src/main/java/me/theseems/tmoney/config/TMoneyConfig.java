@@ -9,9 +9,13 @@ import java.util.List;
 
 public class TMoneyConfig {
   private List<EconomyConfig> economies;
+  private String libsUrl;
+  private List<String> libs;
 
-  public TMoneyConfig(List<EconomyConfig> economies) {
+  public TMoneyConfig(List<EconomyConfig> economies, String libsUrl, List<String> libs) {
     this.economies = economies;
+    this.libsUrl = libsUrl;
+    this.libs = libs;
   }
 
   public List<EconomyConfig> getEconomies() {
@@ -29,6 +33,23 @@ public class TMoneyConfig {
   }
 
   public static GsonBuilder getBuilder() {
-    return new GsonBuilder().registerTypeAdapter(EconomyConfig.class, new EconomyConfigDeserializer());
+    return new GsonBuilder()
+        .registerTypeAdapter(EconomyConfig.class, new EconomyConfigDeserializer());
+  }
+
+  public String getLibsUrl() {
+    return libsUrl;
+  }
+
+  public void setLibsUrl(String libsUrl) {
+    this.libsUrl = libsUrl;
+  }
+
+  public List<String> getLibs() {
+    return libs;
+  }
+
+  public void setLibs(List<String> libs) {
+    this.libs = libs;
   }
 }

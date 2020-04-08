@@ -4,6 +4,7 @@ import com.zaxxer.hikari.HikariConfig;
 import com.zaxxer.hikari.pool.HikariPool;
 
 import java.math.BigDecimal;
+import java.math.RoundingMode;
 import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -27,7 +28,7 @@ public class JDBCEconomy implements Economy {
     config.setMaximumPoolSize(200);
     this.name = name;
     this.pool = new HikariPool(config);
-    this.prefix = "__ECO" + name + "_TMONEY";
+    this.prefix = jdbcConfig.getPrefix() + "TMoney_" + name;
     init();
   }
 
@@ -70,7 +71,7 @@ public class JDBCEconomy implements Economy {
           "UPDATE "
               + prefix
               + " SET Money="
-              + getBalance(player).add(amount).toString()
+              + getBalance(player).add(amount).setScale(40, RoundingMode.HALF_DOWN)
               + " WHERE Player='"
               + player
               + "'");
@@ -97,7 +98,7 @@ public class JDBCEconomy implements Economy {
           "UPDATE "
               + prefix
               + " SET Money="
-              + getBalance(player).subtract(amount).toString()
+              + getBalance(player).subtract(amount).setScale(40, RoundingMode.HALF_DOWN)
               + " WHERE Player='"
               + player
               + "'");
@@ -119,7 +120,7 @@ public class JDBCEconomy implements Economy {
     try (Connection connection = getConnection()) {
       Statement statement = connection.createStatement();
       ResultSet resultSet =
-              statement.executeQuery("SELECT Money FROM " + prefix + " WHERE Player='" + player + "'");
+          statement.executeQuery("SELECT Money FROM " + prefix + " WHERE Player='" + player + "'");
       return resultSet.next();
     } catch (SQLException e) {
       System.err.println("[" + getName() + "] ERROR getting balance for player '" + player + "'");

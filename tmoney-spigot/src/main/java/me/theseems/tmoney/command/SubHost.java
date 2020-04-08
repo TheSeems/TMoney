@@ -28,7 +28,7 @@ public abstract class SubHost {
         .spigot()
         .sendMessage(
             new TextComponent(
-                "§7Sorry.. we have a problem executing this command: §c" + e.getMessage()));
+                "§7Sorry.. we have encountered a problem executing this command: §c" + e.getMessage()));
     sender.spigot().sendMessage(new TextComponent("§7Try again later..."));
     e.printStackTrace();
   }
@@ -42,6 +42,7 @@ public abstract class SubHost {
     String requiredPermission = subs.get(args[0]).getPermission();
     if (sender instanceof Player && !sender.hasPermission(requiredPermission)) {
       onPermissionLack(sender, requiredPermission);
+      return;
     }
 
     String next = args[0];

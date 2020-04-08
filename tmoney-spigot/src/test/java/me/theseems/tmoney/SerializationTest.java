@@ -1,33 +1,23 @@
 package me.theseems.tmoney;
 
 import com.google.gson.GsonBuilder;
-import me.theseems.tmoney.config.EconomyConfig;
-import me.theseems.tmoney.config.JDBCEconomyConfig;
-import me.theseems.tmoney.config.MemoryEconomyConfig;
 import me.theseems.tmoney.config.TMoneyConfig;
-import org.junit.Assert;
+import me.theseems.tmoney.utils.ConfigGenerator;
 import org.junit.jupiter.api.Test;
 
-import java.util.ArrayList;
-import java.util.List;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 
 public class SerializationTest {
 
   @Test
   public void test() {
-    List<EconomyConfig> configList = new ArrayList<>();
-    configList.add(new MemoryEconomyConfig("simple-first"));
-    configList.add(new MemoryEconomyConfig("simple-second"));
-    configList.add(new JDBCEconomyConfig(new JDBCConfig("url", "user", "password"), "jdbc-first"));
-    configList.add(new JDBCEconomyConfig(new JDBCConfig("url", "user", "password"), "jdbc-second"));
-    TMoneyConfig config = new TMoneyConfig(configList);
-
-    System.out.println(new GsonBuilder().setPrettyPrinting().create().toJson(config));
+    TMoneyConfig config = ConfigGenerator.createSampleConfig();
     String string = new GsonBuilder().create().toJson(config);
 
-    TMoneyConfig tMoneyConfig = TMoneyConfig.getBuilder().create().fromJson(string, TMoneyConfig.class);
+    TMoneyConfig tMoneyConfig =
+        TMoneyConfig.getBuilder().create().fromJson(string, TMoneyConfig.class);
     String other = new GsonBuilder().create().toJson(tMoneyConfig);
 
-    Assert.assertEquals(other, string);
+    assertEquals(other, string);
   }
 }

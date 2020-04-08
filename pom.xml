@@ -7,7 +7,7 @@
     <groupId>me.theseems.tmoney</groupId>
     <artifactId>TMoney</artifactId>
     <packaging>pom</packaging>
-    <version>0.1D</version>
+    <version>0.2D</version>
     <modules>
         <module>tmoney-api</module>
         <module>tmoney-common</module>

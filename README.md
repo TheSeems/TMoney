@@ -10,11 +10,15 @@ _[] - required argument_
 _If economy is not specified plugin will use default one (usually Vault)_  
 
 ### Balance
-/tmoney (economy) [player] - Get balance of player in certain economy
+/tmoney balance (economy) [player] - Get balance of player in certain economy
 ### Deposit
-/tmoney deposit (economy) [player] - Deposit money on player's balance in certain economy 
+/tmoney deposit (economy) [player] [amount] - Deposit money on a player's balance in certain economy 
 ### Withdraw
-/tmoney withdraw (economy) [player] - Withdraw money from player's balance in certain economy 
+/tmoney withdraw (economy) [player] [amount] - Withdraw money from a player's balance in certain economy 
+### Reload
+/tmoney reload - Reloads the config
+### List
+/tmoney list - Returns a list of all economies there are
 
 ## PlaceholderAPI
 This plugin provides placeholder: `%tmoney_<economy>%`  
@@ -27,19 +31,22 @@ Here is example config (plugins/TMoney/data.json)
 {
   "economies": [
     {
-      "type": "memory",
-      "name": "<name>"
-    },
-    {
       "config": {
-        "url": "jdbc:postgresql://localhost/minecraft",
+        "url": "jdbc:h2:file:/home/minecraft/inst/plugins/TMoney/Economy.db",
         "user": "minecraft",
-        "password": "doiwannaknow"
+        "password": "password",
+        "prefix": "mc"
       },
       "type": "jdbc",
-      "name": "<name>"
+      "name": "donate"
     }
+  ],
+  "libsUrl": "https://theseems.ru/tmoney/libs",
+  "libs": [
+    "org.h2.Driver",
+    "org.postgresql.Driver"
   ]
+}
 ```
 
 ### Currently supported types of economies in config:

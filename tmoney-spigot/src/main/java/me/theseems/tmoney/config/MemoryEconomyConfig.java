@@ -5,13 +5,13 @@ import me.theseems.tmoney.MemoryEconomy;
 
 public class MemoryEconomyConfig extends EconomyConfig {
 
-    public MemoryEconomyConfig(String name) {
-        setName(name);
-        setType("memory");
-    }
+  public MemoryEconomyConfig(String name) {
+    setName(name);
+    setType("memory");
+  }
 
-    @Override
-    public Economy getEconomy() {
-        return new MemoryEconomy(getName());
-    }
+  @Override
+  public Economy getEconomy() {
+    return new MemoryEconomy(getName());
+  }
 }

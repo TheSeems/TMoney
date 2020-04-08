@@ -21,6 +21,13 @@ public interface SubCommand {
   }
 
   /**
+   * Get sub description
+   *
+   * @return description of sub
+   */
+  String getDescription();
+
+  /**
    * Do a sub command allows console to use ut
    *
    * @return allow console to use a sub
