@@ -4,6 +4,8 @@ import me.clip.placeholderapi.expansion.PlaceholderExpansion;
 import me.theseems.tmoney.TMoneyAPI;
 import org.bukkit.entity.Player;
 
+import java.math.RoundingMode;
+
 public class TMoneyPlaceholderExpansion extends PlaceholderExpansion {
   @Override
   public String getIdentifier() {
@@ -25,7 +27,13 @@ public class TMoneyPlaceholderExpansion extends PlaceholderExpansion {
     final String[] balance = {"0"};
     TMoneyAPI.getManager()
             .getEconomy(params)
-            .ifPresent(economy -> balance[0] = economy.getBalance(p.getUniqueId()).toString());
+            .ifPresent(
+                    economy ->
+                            balance[0] =
+                                    economy
+                                            .getBalance(p.getUniqueId())
+                                            .setScale(0, RoundingMode.HALF_DOWN)
+                                            .toString());
 
     return balance[0];
   }

@@ -42,6 +42,7 @@ public abstract class SubHost {
     String requiredPermission = subs.get(args[0]).getPermission();
     if (sender instanceof Player && !sender.hasPermission(requiredPermission)) {
       onPermissionLack(sender, requiredPermission);
+      return;
     }
 
     String next = args[0];

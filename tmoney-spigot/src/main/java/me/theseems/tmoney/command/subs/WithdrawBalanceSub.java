@@ -8,13 +8,14 @@ import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 
 import java.math.BigDecimal;
+import java.math.RoundingMode;
 import java.util.Optional;
 import java.util.UUID;
 
 public class WithdrawBalanceSub implements SubCommand {
   @Override
   public void pass(CommandSender sender, String[] args) {
-    String economy = "";
+    String economy = "default";
     String playerName = "";
     String stringAmount = "0";
 
@@ -39,7 +40,7 @@ public class WithdrawBalanceSub implements SubCommand {
 
     Optional<Economy> optional = TMoneyAPI.getEconomy(economy);
     if (!optional.isPresent()) {
-      sender.sendMessage("§7Economy §6'" + economy + "'§7 is not found");
+      sender.sendMessage("§7Economy §2'" + economy + "'§7 is not found");
       return;
     }
 
@@ -47,7 +48,7 @@ public class WithdrawBalanceSub implements SubCommand {
     try {
       amount = new BigDecimal(stringAmount);
     } catch (Exception e) {
-      sender.sendMessage("§7Cannot parse money amount from §6'" + stringAmount + "'");
+      sender.sendMessage("§7Cannot parse money amount from §2'" + stringAmount + "'");
       return;
     }
 
@@ -55,11 +56,11 @@ public class WithdrawBalanceSub implements SubCommand {
     Player actual = Bukkit.getPlayer(playerName);
     if (actual == null) {
       sender.sendMessage(
-          "§7Player §6'" + playerName + "'§7 is offline. §oTrying to use argument as UUID");
+              "§7Player §2'" + playerName + "'§7 is offline. §oTrying to use argument as UUID");
       try {
         player = UUID.fromString(playerName);
       } catch (Exception e) {
-        sender.sendMessage("§7Cannot use §6'" + args[1] + "'§7 as UUID");
+        sender.sendMessage("§7Cannot use §2'" + args[1] + "'§7 as UUID");
       }
     } else {
       player = actual.getUniqueId();
@@ -67,11 +68,16 @@ public class WithdrawBalanceSub implements SubCommand {
 
     optional.get().withdraw(player, amount);
     sender.sendMessage(
-            "§7Balance of player §6'" + playerName + "'§7 now is " + optional.get().getBalance(player) + " (-" + amount + ")");
+            "§7Balance of player §2'" + playerName + "'§7 now is " + optional.get().getBalance(player).setScale(1, RoundingMode.HALF_DOWN) + " (-" + amount + ")");
   }
 
   @Override
   public String getPermission() {
     return "tmoney.withdraw";
+  }
+
+  @Override
+  public String getDescription() {
+    return "§7/tmoney withdraw (economy) [player] [amount] §8- §2Withdraw money from player's balance in certain economy";
   }
 }

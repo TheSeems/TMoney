@@ -14,6 +14,8 @@ public class SimpleEconomyManager implements EconomyManager {
 
   @Override
   public Optional<Economy> getEconomy(String name) {
+    if (name.equals("default"))
+      return Optional.ofNullable(TMoneyAPI.getDefault());
     return Optional.ofNullable(economyMap.get(name));
   }
 

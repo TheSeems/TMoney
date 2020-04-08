@@ -1,8 +1,10 @@
 name: TMoney
 softdepend:
   - Vault
-main: me.theseems.tmoney.Main
-version: 0.1D
-api-version: 1.13
+  - PlaceholderAPI
+main: me.theseems.tmoney.TMoneyPlugin
+version: 0.2D
+api-version: '1.13'
 commands:
   tmoney:
+    usage: '§7Type /tmoney help for help'
