@@ -65,13 +65,7 @@ public class TMoneyPlugin extends JavaPlugin {
     }
   }
 
-  private static void loadEconomies() {
-    plugin.getLogger().info("Loading economies...");
-    for (Economy formEconomy : moneyConfig.formEconomies()) {
-      plugin.getLogger().info("Loaded economy: '" + formEconomy.getName() + "'");
-      TMoneyAPI.getManager().addEconomy(formEconomy);
-    }
-
+  public static void loadVault() {
     if (plugin.getServer().getPluginManager().getPlugin("Vault") != null) {
       plugin.getLogger().info("Hooking into Vault...");
       try {
@@ -80,9 +74,18 @@ public class TMoneyPlugin extends JavaPlugin {
         TMoneyAPI.getManager().addEconomy(vaultEconomy);
         plugin.getLogger().info("Setting default economy to a Vault");
       } catch (Exception e) {
-        plugin.getLogger().info("Vault will not be supported by TMoney: " + e.getMessage());
+        plugin.getLogger().warning("Vault will not be supported by TMoney: " + e.getMessage());
       }
     }
+  }
+
+  private static void loadEconomies() {
+    plugin.getLogger().info("Loading economies...");
+    for (Economy formEconomy : moneyConfig.formEconomies()) {
+      plugin.getLogger().info("Loaded economy: '" + formEconomy.getName() + "'");
+      TMoneyAPI.getManager().addEconomy(formEconomy);
+    }
+
   }
 
   private static void downloadLibs() {
@@ -166,6 +169,7 @@ public class TMoneyPlugin extends JavaPlugin {
 
   @Override
   public void onEnable() {
+    loadVault();
     Objects.requireNonNull(getCommand("tmoney")).setExecutor(new TMoneyCommand());
   }
 }

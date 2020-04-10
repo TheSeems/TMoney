@@ -21,7 +21,7 @@ _If economy is not specified plugin will use default one (usually Vault)_
 /tmoney list - Returns a list of all economies there are
 
 ## PlaceholderAPI
-You need to execute: `/papi ecloud download TMoney` in order to use placeholders
+You need to execute: `/papi ecloud download TMoney` in order to use placeholders  
 This plugin provides placeholder: `%tmoney_<economy>%`  
 It returns balance in certain economy 
 
