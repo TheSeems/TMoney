@@ -21,6 +21,7 @@ _If economy is not specified plugin will use default one (usually Vault)_
 /tmoney list - Returns a list of all economies there are
 
 ## PlaceholderAPI
+You need to execute: `/papi ecloud download TMoney` in order to use placeholders  
 This plugin provides placeholder: `%tmoney_<economy>%`  
 It returns balance in certain economy 
 
@@ -49,7 +50,7 @@ Here is example config (plugins/TMoney/data.json)
 }
 ```
 
-### Currently supported types of economies in config:
+### Currently supported types of economies in a config:
 Type __memory__ means that all balances of players will not be load on server restart  
 Type __jdbc__ means that all balances of players will be stored on a database (JDBC) and will be load from it on server restart 
 

@@ -2,11 +2,9 @@ package me.theseems.tmoney;
 
 import me.theseems.tmoney.command.TMoneyCommand;
 import me.theseems.tmoney.config.TMoneyConfig;
-import me.theseems.tmoney.support.TMoneyPlaceholderExpansion;
 import me.theseems.tmoney.support.VaultEconomy;
 import me.theseems.tmoney.utils.ClassLoader;
 import me.theseems.tmoney.utils.ConfigGenerator;
-import org.bukkit.Bukkit;
 import org.bukkit.plugin.Plugin;
 import org.bukkit.plugin.java.JavaPlugin;
 
@@ -168,11 +166,6 @@ public class TMoneyPlugin extends JavaPlugin {
 
   @Override
   public void onEnable() {
-    if (Bukkit.getPluginManager().getPlugin("PlaceholderAPI") != null) {
-      getLogger().info("Hooking into Placeholder API...");
-      new TMoneyPlaceholderExpansion().register();
-      getLogger().info("Hooked!");
-    }
     Objects.requireNonNull(getCommand("tmoney")).setExecutor(new TMoneyCommand());
   }
 }

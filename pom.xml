@@ -12,6 +12,7 @@
         <module>tmoney-api</module>
         <module>tmoney-common</module>
         <module>tmoney-spigot</module>
+        <module>tmoney-papi</module>
     </modules>
 
     <build>
@@ -26,5 +27,13 @@
             </plugin>
         </plugins>
     </build>
+
+    <distributionManagement>
+        <repository>
+            <id>github</id>
+            <name>GitHub TheSeems Apache Maven Packages</name>
+            <url>https://maven.pkg.github.com/theseems/TMoney</url>
+        </repository>
+    </distributionManagement>
 
 </project>
