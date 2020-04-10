@@ -15,6 +15,7 @@ public class ReloadSub implements SubCommand {
 
     try {
       TMoneyPlugin.setup();
+      TMoneyPlugin.loadVault();
       sender.sendMessage(
           "§aPlugin reloaded with "
               + TMoneyAPI.getManager().getEconomies().size()
