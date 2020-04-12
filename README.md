@@ -22,8 +22,9 @@ _If economy is not specified plugin will use default one (usually Vault)_
 
 ## PlaceholderAPI
 You need to execute: `/papi ecloud download TMoney` in order to use placeholders  
-This plugin provides placeholder: `%tmoney_<economy>%`  
-It returns balance in certain economy 
+Just to get balance in certain economy use: `%tmoney_<economy>%`  
+To get fixed balance use: %tmoney_<economy>&&<precision>%  
+To get formatted balance use: %tmoney_<economy>&&formatted% (like 1.32K or 1.55M)  
 
 ## Config
 Here is example config (plugins/TMoney/data.json)  
