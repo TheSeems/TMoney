@@ -4,6 +4,7 @@ import me.theseems.tmoney.Economy;
 import me.theseems.tmoney.TMoneyAPI;
 import me.theseems.tmoney.command.SubCommand;
 import org.bukkit.Bukkit;
+import org.bukkit.OfflinePlayer;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 
@@ -21,11 +22,11 @@ public class GetBalanceSub implements SubCommand {
       economy = args[0];
       playerName = args[1];
     } else if (args.length == 1) {
-      playerName = args[0];
-      economy = TMoneyAPI.getDefault().getName();
+      playerName = sender.getName();
+      economy = args[0];
     } else {
       if (!(sender instanceof Player)) {
-        sender.sendMessage("§7You, as a console, should specify at least player's name");
+        sender.sendMessage("§cYou, as a console, should specify economy and player's name");
         return;
       }
       playerName = sender.getName();
@@ -33,19 +34,21 @@ public class GetBalanceSub implements SubCommand {
 
     Optional<Economy> optional = TMoneyAPI.getEconomy(economy);
     if (!optional.isPresent()) {
-      sender.sendMessage("§7Economy §2'" + economy + "'§7 is not found");
+      sender.sendMessage("§cEconomy §7'" + economy + "'§c is not found");
       return;
     }
 
-    UUID player = null;
+    UUID player;
     Player actual = Bukkit.getPlayer(playerName);
+
     if (actual == null) {
       sender.sendMessage(
           "§7Player §2'" + playerName + "'§7 is offline. §oTrying to use argument as UUID");
       try {
         player = UUID.fromString(playerName);
       } catch (Exception e) {
-        sender.sendMessage("§7Cannot use §2'" + args[1] + "'§7 as UUID");
+        sender.sendMessage("§cCannot use §7'" + playerName + "'§c as UUID");
+        return;
       }
     } else {
       player = actual.getUniqueId();

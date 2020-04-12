@@ -5,7 +5,7 @@
     <parent>
         <artifactId>TMoney</artifactId>
         <groupId>me.theseems.tmoney</groupId>
-        <version>0.2D</version>
+        <version>0.3D</version>
     </parent>
     <modelVersion>4.0.0</modelVersion>
 
@@ -66,8 +66,14 @@
         <dependency>
             <groupId>me.theseems.tmoney</groupId>
             <artifactId>tmoney-api</artifactId>
-            <version>0.2D</version>
+            <version>0.3D</version>
             <scope>compile</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.junit.jupiter</groupId>
+            <artifactId>junit-jupiter</artifactId>
+            <version>RELEASE</version>
+            <scope>test</scope>
         </dependency>
     </dependencies>
 
