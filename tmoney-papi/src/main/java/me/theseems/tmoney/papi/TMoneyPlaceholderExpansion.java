@@ -27,7 +27,7 @@ public class TMoneyPlaceholderExpansion extends PlaceholderExpansion {
 
   @Override
   public String getVersion() {
-    return "0.3D";
+    return "0.4D";
   }
 
   @Override
@@ -97,6 +97,6 @@ public class TMoneyPlaceholderExpansion extends PlaceholderExpansion {
     if ("formatted".equals(mode)) {
       return format(balance);
     }
-    return balance.toString();
+    return balance.toPlainString();
   }
 }

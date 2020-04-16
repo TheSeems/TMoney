@@ -3,7 +3,7 @@ softdepend:
   - Vault
   - PlaceholderAPI
 main: me.theseems.tmoney.TMoneyPlugin
-version: 0.3D
+version: 0.4D
 api-version: '1.13'
 commands:
   tmoney:

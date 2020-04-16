@@ -5,6 +5,7 @@ import me.theseems.tmoney.config.TMoneyConfig;
 import me.theseems.tmoney.support.VaultEconomy;
 import me.theseems.tmoney.utils.ClassLoader;
 import me.theseems.tmoney.utils.ConfigGenerator;
+import org.bukkit.Material;
 import org.bukkit.plugin.Plugin;
 import org.bukkit.plugin.java.JavaPlugin;
 
@@ -26,9 +27,16 @@ public class TMoneyPlugin extends JavaPlugin {
     ClassLoader classLoader = new ClassLoader();
     for (File listFile : Objects.requireNonNull(file.listFiles())) {
       if (!listFile.getName().endsWith(".jar")) continue;
-      classLoader.put(listFile);
-      getPlugin().getLogger().info("Loading " + listFile + " as a driver");
-      Class.forName(listFile.getName().substring(0, listFile.getName().length() - 4));
+
+      String className = listFile.getName().substring(0, listFile.getName().length() - 4);
+      try {
+        Class.forName(className, false, null);
+        getPlugin().getLogger().info("Class " + className + " is present");
+      } catch (ClassNotFoundException e) {
+        getPlugin().getLogger().info("Loading " + listFile + " as a driver");
+        classLoader.put(listFile);
+        Class.forName(className);
+      }
     }
   }
 
@@ -45,7 +53,7 @@ public class TMoneyPlugin extends JavaPlugin {
     try {
       moneyConfig =
           TMoneyConfig.getBuilder().create().fromJson(new FileReader(file), TMoneyConfig.class);
-      if (moneyConfig == null) throw new NullPointerException("Config is empty");
+      if (moneyConfig == null) throw new IllegalStateException("Config is empty");
     } catch (Exception e) {
       plugin
           .getLogger()
@@ -85,7 +93,6 @@ public class TMoneyPlugin extends JavaPlugin {
       plugin.getLogger().info("Loaded economy: '" + formEconomy.getName() + "'");
       TMoneyAPI.getManager().addEconomy(formEconomy);
     }
-
   }
 
   private static void downloadLibs() {
@@ -169,7 +176,7 @@ public class TMoneyPlugin extends JavaPlugin {
 
   @Override
   public void onEnable() {
-    loadVault();
     Objects.requireNonNull(getCommand("tmoney")).setExecutor(new TMoneyCommand());
+    loadVault();
   }
 }
