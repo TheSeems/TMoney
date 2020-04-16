@@ -16,6 +16,8 @@ public class JDBCEconomy implements Economy {
   private String name;
   private String prefix;
 
+  private static final int SCALE = 30;
+
   public JDBCEconomy(String name, JDBCConfig jdbcConfig) {
     HikariConfig config = new HikariConfig();
     config.setJdbcUrl(jdbcConfig.getUrl());
@@ -24,8 +26,7 @@ public class JDBCEconomy implements Economy {
     config.addDataSourceProperty("cachePrepStmts", "true");
     config.addDataSourceProperty("prepStmtCacheSize", "250");
     config.addDataSourceProperty("prepStmtCacheSqlLimit", "2048");
-    config.addDataSourceProperty("allowMultiQueries", "true");
-    config.setMaximumPoolSize(200);
+    config.setMaximumPoolSize(20);
     this.name = name;
     this.pool = new HikariPool(config);
     this.prefix = jdbcConfig.getPrefix() + "TMoney_" + name;
@@ -47,7 +48,7 @@ public class JDBCEconomy implements Economy {
       statement.execute(
           "CREATE TABLE IF NOT EXISTS " + prefix + " (Player VARCHAR(100), Money NUMERIC)");
     } catch (SQLException e) {
-      System.err.println("ERROR initializing table " + prefix);
+      System.err.println("ERROR initializing table " + prefix + ": " + e.getMessage());
       e.printStackTrace();
     }
   }
@@ -58,58 +59,39 @@ public class JDBCEconomy implements Economy {
       Statement statement = connection.createStatement();
       statement.execute("INSERT INTO " + prefix + " VALUES ('" + player + "', 0)");
     } catch (SQLException e) {
+      System.err.println("ERROR initializing player '" + player + "': " + e.getMessage());
       e.printStackTrace();
     }
   }
 
   @Override
   public void deposit(UUID player, BigDecimal amount) {
-    try (Connection connection = getConnection()) {
-      initPlayer(player);
-      Statement statement = connection.createStatement();
-      statement.execute(
-          "UPDATE "
-              + prefix
-              + " SET Money="
-              + getBalance(player).add(amount).setScale(40, RoundingMode.HALF_DOWN)
-              + " WHERE Player='"
-              + player
-              + "'");
-    } catch (SQLException e) {
-      System.err.println(
-          "["
-              + getName()
-              + "] ERROR depositing to '"
-              + player
-              + "' amount '"
-              + amount
-              + "': "
-              + e.getMessage());
-      e.printStackTrace();
-    }
+    initPlayer(player);
+    BigDecimal finalMoney = getBalance(player).add(amount).setScale(SCALE, RoundingMode.HALF_DOWN);
+    changeMoney(player, finalMoney);
   }
 
   @Override
   public void withdraw(UUID player, BigDecimal amount) {
+    initPlayer(player);
+    BigDecimal finalMoney =
+        getBalance(player).subtract(amount).setScale(SCALE, RoundingMode.HALF_DOWN);
+    changeMoney(player, finalMoney);
+  }
+
+  private void changeMoney(UUID player, BigDecimal finalMoney) {
     try (Connection connection = getConnection()) {
-      initPlayer(player);
       Statement statement = connection.createStatement();
       statement.execute(
-          "UPDATE "
-              + prefix
-              + " SET Money="
-              + getBalance(player).subtract(amount).setScale(40, RoundingMode.HALF_DOWN)
-              + " WHERE Player='"
-              + player
-              + "'");
+          "UPDATE " + prefix + " SET Money=" + finalMoney + " WHERE Player='" + player + "'");
     } catch (SQLException e) {
       System.err.println(
           "["
               + getName()
-              + "] ERROR depositing to '"
+              + "] ERROR changing money of player '"
               + player
               + "' amount '"
-              + amount
+              + finalMoney
               + "': "
               + e.getMessage());
       e.printStackTrace();
@@ -123,7 +105,7 @@ public class JDBCEconomy implements Economy {
           statement.executeQuery("SELECT Money FROM " + prefix + " WHERE Player='" + player + "'");
       return resultSet.next();
     } catch (SQLException e) {
-      System.err.println("[" + getName() + "] ERROR getting balance for player '" + player + "'");
+      System.err.println("[" + getName() + "] ERROR checking if player exist '" + player + "'");
       e.printStackTrace();
     }
     return false;
