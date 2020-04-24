@@ -44,7 +44,7 @@ public class DepositBalanceSub implements SubCommand {
     } else {
       if (!(sender instanceof Player)) {
         sender.sendMessage("§cYou, as a console, should specify player's name, economy and amount");
-      } else sender.sendMessage("§cPlease, specify at least an amount to deposit");
+      } else sender.sendMessage("§cPlease, specify at least an amount to deposit/withdraw");
       return;
     }
 
@@ -81,7 +81,10 @@ public class DepositBalanceSub implements SubCommand {
     sender.sendMessage(
         "§7Balance of player §2'"
             + playerName
-            + "'§7 now is §2"
+            + "'§7 in §2'"
+            + economy
+            + "'§7 "
+            + "now is §2"
             + optional.get().getBalance(player).setScale(1, RoundingMode.HALF_DOWN)
             + " §7("
             + (amount.signum() >= 0 ? "§a+" : "§c-")

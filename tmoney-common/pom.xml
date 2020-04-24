@@ -5,7 +5,7 @@
     <parent>
         <artifactId>TMoney</artifactId>
         <groupId>me.theseems.tmoney</groupId>
-        <version>0.4D</version>
+        <version>0.5D</version>
     </parent>
     <modelVersion>4.0.0</modelVersion>
 
@@ -14,7 +14,7 @@
         <dependency>
             <groupId>me.theseems.tmoney</groupId>
             <artifactId>tmoney-api</artifactId>
-            <version>0.4D</version>
+            <version>0.5D</version>
             <scope>compile</scope>
         </dependency>
         <!-- https://mvnrepository.com/artifact/com.zaxxer/HikariCP -->

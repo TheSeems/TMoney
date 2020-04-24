@@ -1,6 +1,7 @@
 package me.theseems.tmoney.support;
 
 import me.theseems.tmoney.Economy;
+import me.theseems.tmoney.TMoneyPlugin;
 import org.bukkit.Bukkit;
 import org.bukkit.plugin.RegisteredServiceProvider;
 
@@ -14,12 +15,14 @@ public class VaultEconomy implements Economy {
 
   public VaultEconomy() {
     if (getServer().getPluginManager().getPlugin("Vault") == null) {
-      throw new IllegalStateException("Vault plugin is not present");
+      throw new IllegalStateException("Vault plugin is absent");
     }
     RegisteredServiceProvider<net.milkbowl.vault.economy.Economy> rsp =
-        getServer().getServicesManager().getRegistration(net.milkbowl.vault.economy.Economy.class);
+        Bukkit.getServer()
+            .getServicesManager()
+            .getRegistration(net.milkbowl.vault.economy.Economy.class);
     if (rsp == null) {
-      throw new IllegalStateException("Vault plugin is not present");
+      throw new IllegalStateException("Vault plugin's provider is absent");
     }
     vault = rsp.getProvider();
   }

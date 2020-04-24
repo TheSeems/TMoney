@@ -27,7 +27,7 @@ public class TMoneyPlaceholderExpansion extends PlaceholderExpansion {
 
   @Override
   public String getVersion() {
-    return "0.4D";
+    return "0.5D";
   }
 
   @Override
@@ -60,7 +60,7 @@ public class TMoneyPlaceholderExpansion extends PlaceholderExpansion {
   }
 
   public static String format(BigDecimal decimal) {
-    final List<String> names = Arrays.asList("", "K", "M", "B", "T");
+    final List<String> names = Arrays.asList("", "k", "M", "B", "T");
     int digits = decimal.signum() == 0 ? 1 : decimal.precision() - decimal.scale();
 
     if (digits > names.size() * 3) {
@@ -71,7 +71,7 @@ public class TMoneyPlaceholderExpansion extends PlaceholderExpansion {
         decimal.divide(
             new BigDecimal(10).pow(Math.max(0, (digits - 1) / 3 * 3)), 2, RoundingMode.FLOOR);
     actual = actual.stripTrailingZeros();
-    return actual.toString() + names.get(Math.max(0, (digits - 1) / 3));
+    return actual.toPlainString() + names.get(Math.max(0, (digits - 1) / 3));
   }
 
   @Override

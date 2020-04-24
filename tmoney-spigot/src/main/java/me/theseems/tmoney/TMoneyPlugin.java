@@ -176,7 +176,7 @@ public class TMoneyPlugin extends JavaPlugin {
 
   @Override
   public void onEnable() {
-    Objects.requireNonNull(getCommand("tmoney")).setExecutor(new TMoneyCommand());
     loadVault();
+    Objects.requireNonNull(getCommand("tmoney")).setExecutor(new TMoneyCommand());
   }
 }
