@@ -58,6 +58,8 @@ public class GetBalanceSub implements SubCommand {
     sender.sendMessage(
         "§7Balance of player §2'"
             + playerName
+            + "'§7 in §2'"
+            + economy
             + "'§7 is §2'"
             + amount.setScale(3, RoundingMode.HALF_DOWN)
             + "'");
