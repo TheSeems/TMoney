@@ -4,7 +4,6 @@ import me.theseems.tmoney.Economy;
 import me.theseems.tmoney.TMoneyAPI;
 import me.theseems.tmoney.command.SubCommand;
 import org.bukkit.Bukkit;
-import org.bukkit.OfflinePlayer;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 
@@ -26,26 +25,33 @@ public class DepositBalanceSub implements SubCommand {
     String playerName;
     String stringAmount;
 
-    if (args.length >= 3) {
-      economy = args[0];
-      playerName = args[1];
-      stringAmount = args[2];
-    } else if (args.length == 2) {
-      playerName = sender.getName();
-      stringAmount = args[1];
-      economy = args[0];
-    } else if (args.length == 1) {
-      if (!(sender instanceof Player)) {
-        sender.sendMessage("§cYou, as a console, should specify player's name, economy and amount");
+    switch (args.length) {
+      default:
+      case 3:
+        economy = args[0];
+        playerName = args[1];
+        stringAmount = args[2];
+        break;
+      case 2:
+        playerName = sender.getName();
+        stringAmount = args[1];
+        economy = args[0];
+        break;
+      case 1:
+        if (!(sender instanceof Player)) {
+          sender.sendMessage(
+              "§cYou, as a console, should specify player's name, economy and amount");
+          return;
+        }
+        playerName = sender.getName();
+        stringAmount = args[0];
+        break;
+      case 0:
+        if (!(sender instanceof Player)) {
+          sender.sendMessage(
+              "§cYou, as a console, should specify player's name, economy and amount");
+        } else sender.sendMessage("§cPlease, specify at least an amount to deposit/withdraw");
         return;
-      }
-      playerName = sender.getName();
-      stringAmount = args[0];
-    } else {
-      if (!(sender instanceof Player)) {
-        sender.sendMessage("§cYou, as a console, should specify player's name, economy and amount");
-      } else sender.sendMessage("§cPlease, specify at least an amount to deposit/withdraw");
-      return;
     }
 
     Optional<Economy> optional = TMoneyAPI.getEconomy(economy);

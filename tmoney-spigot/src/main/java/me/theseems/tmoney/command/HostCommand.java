@@ -8,10 +8,10 @@ import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Map;
 
-public abstract class SubHost {
+public abstract class HostCommand {
   protected Map<String, SubCommand> subs;
 
-  public SubHost() {
+  public HostCommand() {
     subs = new HashMap<>();
   }
 
@@ -28,32 +28,34 @@ public abstract class SubHost {
         .spigot()
         .sendMessage(
             new TextComponent(
-                "§7Sorry.. we have encountered a problem executing this command: §c" + e.getMessage()));
-    sender.spigot().sendMessage(new TextComponent("§7Try again later..."));
+                "§7Sorry.. we have encountered a problem executing this command. §8("
+                    + e.getMessage()
+                    + ")"));
+    sender.spigot().sendMessage(new TextComponent("§7Please, try again later..."));
     e.printStackTrace();
   }
 
   public void propagate(CommandSender sender, String[] args) {
-    if (args.length == 0 || !subs.containsKey(args[0])) {
+    if (args.length == 0 || !subs.containsKey(args[0] = args[0].toLowerCase())) {
       onNotFound(sender);
       return;
     }
 
     String requiredPermission = subs.get(args[0]).getPermission();
-    if (sender instanceof Player && !sender.hasPermission(requiredPermission)) {
+    if (!sender.hasPermission(requiredPermission)) {
       onPermissionLack(sender, requiredPermission);
       return;
     }
 
     String next = args[0];
+
+    // Skip the first argument
     args = Arrays.copyOfRange(args, 1, args.length);
+
     try {
       SubCommand command = subs.get(next);
       if (!command.allowConsole() && !(sender instanceof Player)) {
-        sender
-            .spigot()
-            .sendMessage(
-                new TextComponent("§7Sorry.. but§c command is unavailable for you. (Not Player)"));
+        sender.sendMessage("§7Sorry, but command is only available for real players.");
         return;
       }
 

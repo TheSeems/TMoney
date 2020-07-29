@@ -19,7 +19,7 @@ public class ReloadSub implements SubCommand {
       sender.sendMessage(
           "§aPlugin reloaded with "
               + TMoneyAPI.getManager().getEconomies().size()
-              + " economy(ies)");
+              + " econom" + (TMoneyAPI.getManager().getEconomies().size() == 1 ? "y" : "ies"));
     } catch (Exception e) {
       sender.sendMessage("§cError reloading config: " + e.getMessage());
     }

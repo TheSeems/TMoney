@@ -2,10 +2,11 @@ package me.theseems.tmoney;
 
 import me.theseems.tmoney.command.TMoneyCommand;
 import me.theseems.tmoney.config.TMoneyConfig;
-import me.theseems.tmoney.support.VaultEconomy;
+import me.theseems.tmoney.providers.playerpoints.PlayerPointsEconomyProvider;
+import me.theseems.tmoney.providers.vault.VaultEconomy;
+import me.theseems.tmoney.providers.vault.VaultEconomyConfigProvider;
 import me.theseems.tmoney.utils.ClassLoader;
 import me.theseems.tmoney.utils.ConfigGenerator;
-import org.bukkit.Material;
 import org.bukkit.plugin.Plugin;
 import org.bukkit.plugin.java.JavaPlugin;
 
@@ -151,8 +152,6 @@ public class TMoneyPlugin extends JavaPlugin {
       plugin.getLogger().warning("Cannot load drivers: " + e.getMessage());
       e.printStackTrace();
     }
-
-    loadEconomies();
   }
 
   public static Plugin getPlugin() {
@@ -171,12 +170,18 @@ public class TMoneyPlugin extends JavaPlugin {
   public void onLoad() {
     plugin = this;
     TMoneyAPI.setManager(new SimpleEconomyManager());
+    TMoneyAPI.setConfigManager(new SimpleEconomyConfigManager());
     setup();
   }
 
   @Override
   public void onEnable() {
+    TMoneyAPI.getConfigManager().register(new VaultEconomyConfigProvider());
+    TMoneyAPI.getConfigManager().register(new PlayerPointsEconomyProvider());
+
+    loadEconomies();
     loadVault();
+
     Objects.requireNonNull(getCommand("tmoney")).setExecutor(new TMoneyCommand());
   }
 }

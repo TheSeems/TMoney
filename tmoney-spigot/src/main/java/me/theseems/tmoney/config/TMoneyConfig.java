@@ -11,11 +11,28 @@ public class TMoneyConfig {
   private List<EconomyConfig> economies;
   private String libsUrl;
   private List<String> libs;
+  private String defaultEconomy;
 
   public TMoneyConfig(List<EconomyConfig> economies, String libsUrl, List<String> libs) {
     this.economies = economies;
     this.libsUrl = libsUrl;
     this.libs = libs;
+  }
+
+  public String getDefaultEconomy() {
+    return defaultEconomy;
+  }
+
+  public void setDefaultEconomy(String defaultEconomy) {
+    this.defaultEconomy = defaultEconomy;
+  }
+
+  public TMoneyConfig(
+      List<EconomyConfig> economies, String libsUrl, List<String> libs, String defaultEconomy) {
+    this.economies = economies;
+    this.libsUrl = libsUrl;
+    this.libs = libs;
+    this.defaultEconomy = defaultEconomy;
   }
 
   public List<EconomyConfig> getEconomies() {
@@ -28,7 +45,11 @@ public class TMoneyConfig {
 
   public Collection<Economy> formEconomies() {
     List<Economy> economies = new ArrayList<>();
-    this.economies.forEach(economyConfig -> economies.add(economyConfig.getEconomy()));
+    this.economies.forEach(
+        economyConfig -> {
+          Economy economy = economyConfig.getEconomy();
+          if (economy != null) economies.add(economyConfig.getEconomy());
+        });
     return economies;
   }
 

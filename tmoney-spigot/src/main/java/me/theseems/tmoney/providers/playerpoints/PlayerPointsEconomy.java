@@ -1,7 +1,10 @@
-package me.theseems.tmoney;
+package me.theseems.tmoney.providers.playerpoints;
 
 import com.zaxxer.hikari.HikariConfig;
 import com.zaxxer.hikari.HikariDataSource;
+import me.theseems.tmoney.Economy;
+import me.theseems.tmoney.JDBCConfig;
+import org.bukkit.Bukkit;
 
 import java.math.BigDecimal;
 import java.math.RoundingMode;
@@ -11,14 +14,14 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.UUID;
 
-public class JDBCEconomy implements Economy {
+public class PlayerPointsEconomy implements Economy {
   private HikariDataSource source;
   private String name;
   private String prefix;
 
   private static final int SCALE = 30;
 
-  public JDBCEconomy(String name, JDBCConfig jdbcConfig) {
+  public PlayerPointsEconomy(String name, JDBCConfig jdbcConfig) {
     HikariConfig config = new HikariConfig();
     config.setJdbcUrl(jdbcConfig.getUrl());
     config.setUsername(jdbcConfig.getUser());
@@ -34,7 +37,7 @@ public class JDBCEconomy implements Economy {
 
     this.name = name;
     this.source = new HikariDataSource(config);
-    this.prefix = jdbcConfig.getPrefix() + "TMoney_" + name;
+    this.prefix = jdbcConfig.getPrefix();
     init();
   }
 
@@ -48,7 +51,14 @@ public class JDBCEconomy implements Economy {
         Statement statement = connection.createStatement()) {
 
       String createSql =
-          "CREATE TABLE IF NOT EXISTS " + prefix + " (Player VARCHAR(100), Money NUMERIC)";
+          "CREATE TABLE IF NOT EXISTS "
+              + prefix
+              + " ("
+              + "  `id` INT(10) UNSIGNED NOT NULL,"
+              + "  `playername` VARCHAR(36) NOT NULL,"
+              + "  `points` INT(11) NOT NULL"
+              + ")";
+
       statement.execute(createSql);
     } catch (SQLException e) {
       System.err.println("ERROR initializing table " + prefix + ": " + e.getMessage());
@@ -61,7 +71,12 @@ public class JDBCEconomy implements Economy {
     try (Connection connection = source.getConnection();
         Statement statement = connection.createStatement()) {
 
-      String insertSql = "INSERT INTO " + prefix + " VALUES ('" + player + "', 0)";
+      String insertSql =
+          "INSERT INTO "
+              + prefix
+              + " VALUES (DEFAULT, '"
+              + Bukkit.getOfflinePlayer(player).getName()
+              + "', 0)";
       statement.execute(insertSql);
     } catch (SQLException e) {
       System.err.println(
@@ -95,7 +110,13 @@ public class JDBCEconomy implements Economy {
         Statement statement = connection.createStatement()) {
 
       String updateSql =
-          "UPDATE " + prefix + " SET Money=" + finalMoney + " WHERE Player='" + player + "'";
+          "UPDATE "
+              + prefix
+              + " SET `points`="
+              + finalMoney
+              + " WHERE `playername`='"
+              + Bukkit.getOfflinePlayer(player).getName()
+              + "'";
       statement.execute(updateSql);
     } catch (SQLException e) {
       System.err.println(
@@ -114,7 +135,12 @@ public class JDBCEconomy implements Economy {
   private boolean exists(UUID player) {
     try (Connection connection = source.getConnection();
         Statement statement = connection.createStatement()) {
-      String selectSql = "SELECT Money FROM " + prefix + " WHERE Player='" + player + "'";
+      String selectSql =
+          "SELECT `points` FROM "
+              + prefix
+              + " WHERE `playername`='"
+              + Bukkit.getOfflinePlayer(player).getName()
+              + "'";
       ResultSet resultSet = statement.executeQuery(selectSql);
       return resultSet.next();
     } catch (SQLException e) {
@@ -136,9 +162,14 @@ public class JDBCEconomy implements Economy {
   public BigDecimal getBalance(UUID player) {
     try (Connection connection = source.getConnection();
         Statement statement = connection.createStatement()) {
-      String selectSql = "SELECT Money FROM " + prefix + " WHERE Player='" + player + "'";
+      String selectSql =
+          "SELECT `points` FROM "
+              + prefix
+              + " WHERE `playername`='"
+              + Bukkit.getOfflinePlayer(player).getName()
+              + "'";
       ResultSet resultSet = statement.executeQuery(selectSql);
-      if (resultSet.next()) return resultSet.getBigDecimal("Money");
+      if (resultSet.next()) return resultSet.getBigDecimal("points");
     } catch (SQLException e) {
       System.err.println(
           "ERROR getting balance for player '"

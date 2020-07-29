@@ -36,10 +36,10 @@ public class ConfigGenerator {
       try {
         path = File.createTempFile("tmoney-temp", "h2.db").getPath();
         System.err.println("Using the temp file: " + path);
-        System.err.println("Please, consider specifying non-temp file (DB) path in conifg!");
+        System.err.println("Please, consider specifying non-temp file (DB) path in config!");
       } catch (Exception ex) {
         System.err.println("Cannot even use temp file for config");
-        System.err.println("Please, fill in file (DB) path in conifg!");
+        System.err.println("Please, fill in file (DB) path in config!");
       }
     }
 
@@ -64,13 +64,16 @@ public class ConfigGenerator {
   }
 
   public static File loadFile(String name) throws IOException {
-    if (!TMoneyPlugin.getPlugin().getDataFolder().exists()) {
-      TMoneyPlugin.getPlugin().getDataFolder().mkdir();
+    File dataFolder = TMoneyPlugin.getPlugin().getDataFolder();
+    if (!dataFolder.exists()) {
+      dataFolder.mkdir();
     }
-    File file = new File(TMoneyPlugin.getPlugin().getDataFolder(), name);
+
+    File file = new File(dataFolder, name);
     if (!file.exists()) {
       file.createNewFile();
     }
+
     return file;
   }
 }

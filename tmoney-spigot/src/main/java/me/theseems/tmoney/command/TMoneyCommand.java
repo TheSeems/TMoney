@@ -6,10 +6,11 @@ import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
 
-public class TMoneyCommand extends SubHost implements CommandExecutor {
+public class TMoneyCommand extends HostCommand implements CommandExecutor {
   public TMoneyCommand() {
     attach("deposit", new DepositBalanceSub());
     attach("withdraw", new WithdrawBalanceSub());
+    attach("set", new SetBalanceSub());
     attach("balance", new GetBalanceSub());
     attach("reload", new ReloadSub());
     attach("list", new ListSub());
@@ -33,7 +34,7 @@ public class TMoneyCommand extends SubHost implements CommandExecutor {
     if (strings.length > 0 && strings[0].equals("help")) {
       onNotFound(commandSender);
       subs.forEach(
-          (s1, subCommand) -> {
+          (ignored, subCommand) -> {
             if (subCommand.getDescription() != null
                 && commandSender.hasPermission(subCommand.getPermission()))
               commandSender.sendMessage(subCommand.getDescription());

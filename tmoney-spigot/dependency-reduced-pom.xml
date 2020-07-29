@@ -3,7 +3,7 @@
   <parent>
     <artifactId>TMoney</artifactId>
     <groupId>me.theseems.tmoney</groupId>
-    <version>0.5D</version>
+    <version>${revision}</version>
   </parent>
   <modelVersion>4.0.0</modelVersion>
   <artifactId>tmoney-spigot</artifactId>

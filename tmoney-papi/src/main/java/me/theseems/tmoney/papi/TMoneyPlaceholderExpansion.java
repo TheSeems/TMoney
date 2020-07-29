@@ -6,9 +6,7 @@ import me.theseems.tmoney.TMoneyAPI;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 
-import javax.swing.*;
 import java.math.BigDecimal;
-import java.math.MathContext;
 import java.math.RoundingMode;
 import java.util.Arrays;
 import java.util.List;
@@ -94,7 +92,7 @@ public class TMoneyPlaceholderExpansion extends PlaceholderExpansion {
     }
 
     BigDecimal balance = getBalance(p, economy, digits);
-    if ("formatted".equals(mode)) {
+    if (mode.equals("formatted")) {
       return format(balance);
     }
     return balance.toPlainString();

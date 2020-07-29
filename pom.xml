@@ -7,13 +7,17 @@
     <groupId>me.theseems.tmoney</groupId>
     <artifactId>TMoney</artifactId>
     <packaging>pom</packaging>
-    <version>0.5D</version>
+    <version>${revision}</version>
     <modules>
         <module>tmoney-api</module>
         <module>tmoney-common</module>
         <module>tmoney-spigot</module>
         <module>tmoney-papi</module>
     </modules>
+
+    <properties>
+        <revision>0.6D-test</revision>
+    </properties>
 
     <build>
         <plugins>
