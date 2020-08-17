@@ -75,7 +75,7 @@ public class PlayerPointsEconomy implements Economy {
           "INSERT INTO "
               + prefix
               + " VALUES (DEFAULT, '"
-              + Bukkit.getOfflinePlayer(player).getName()
+              + Bukkit.getOfflinePlayer(player).getUniqueId()
               + "', 0)";
       statement.execute(insertSql);
     } catch (SQLException e) {
@@ -115,7 +115,7 @@ public class PlayerPointsEconomy implements Economy {
               + " SET `points`="
               + finalMoney
               + " WHERE `playername`='"
-              + Bukkit.getOfflinePlayer(player).getName()
+              + Bukkit.getOfflinePlayer(player).getUniqueId()
               + "'";
       statement.execute(updateSql);
     } catch (SQLException e) {
@@ -139,7 +139,7 @@ public class PlayerPointsEconomy implements Economy {
           "SELECT `points` FROM "
               + prefix
               + " WHERE `playername`='"
-              + Bukkit.getOfflinePlayer(player).getName()
+              + Bukkit.getOfflinePlayer(player).getUniqueId()
               + "'";
       ResultSet resultSet = statement.executeQuery(selectSql);
       return resultSet.next();
@@ -166,7 +166,7 @@ public class PlayerPointsEconomy implements Economy {
           "SELECT `points` FROM "
               + prefix
               + " WHERE `playername`='"
-              + Bukkit.getOfflinePlayer(player).getName()
+              + Bukkit.getOfflinePlayer(player).getUniqueId()
               + "'";
       ResultSet resultSet = statement.executeQuery(selectSql);
       if (resultSet.next()) return resultSet.getBigDecimal("points");
